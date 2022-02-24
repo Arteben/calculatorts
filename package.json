@@ -4,7 +4,8 @@
   "description": "",
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "webpack serve -c configs/webpack.dev.js",
+    "build": "webpack -c configs/webpack.prod.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,7 @@
     "@babel/core": "^7.17.5",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "@tsconfig/recommended": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
     "babel-loader": "^8.2.3",

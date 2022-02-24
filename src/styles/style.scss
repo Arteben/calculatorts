@@ -1,0 +1,17 @@
+
+body {
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  background: aliceblue;
+  min-height: 1000px;
+  padding-top: 100px;
+}
+
+#calcImg {
+  width: 370px;
+  height: 500px;
+}
