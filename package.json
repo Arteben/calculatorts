@@ -5,7 +5,8 @@
   "main": "",
   "scripts": {
     "serve": "webpack serve -c configs/webpack.dev.js",
-    "build": "webpack -c configs/webpack.prod.js"
+    "build": "webpack -c configs/webpack.prod.js",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "",
