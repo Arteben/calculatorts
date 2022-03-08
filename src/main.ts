@@ -1,19 +1,18 @@
 import '@/styles/style.scss'
 
-interface Botton {
-  element: any
-  name: string
+
+interface flashingObj {
+  first: string
+  second?: string
 }
 
-class BottonElement {
-  element: any
-  name: string
-
-  constructor(el: any, name: string) {
-    this.element = el;
-    this.name = name;
+const setText = function(_someObj: flashingObj) {
+  const textElement = document.querySelector('#someText')
+  const text = _someObj.first
+  console.log(_someObj.second)
+  if (textElement && text && _someObj.second) {
+    textElement.innerHTML = text + _someObj.second
   }
 }
 
-const someBotton: Botton = new BottonElement({}, 'Some Botton');
-console.log(someBotton)
+setText({first: 'a'})
