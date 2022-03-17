@@ -63,37 +63,40 @@ $calcImgHeight: 500px;
       letter-spacing: 2px;
     }
   }
-  
-  #highlightEqualButton,
-  #highlightZeroButton,
-  .highlightStandartButton {
-    background: radial-gradient(circle, rgba(2,0,36,0) 30%, rgba(9,121,13,0.52) 59%, rgba(0,255,70,1) 86%);
-    border: 1px solid rgba(0,255,70,1);
-
-    border-radius: 10px;
-    position: absolute;
-    width: 58px;
-    height: 47px;
-
-    top: 113px;
-    left: 43px;
-  }
-  
-  #highlightZeroButton {
-    width: 138px;
-    height: 47px;
-    background: linear-gradient(90deg, rgba(2,0,36,0) 29%, rgba(9,121,13,0.52) 64%, rgba(0,255,70,1) 85%);
-
-    top: 414px;
-    left: 41px;
-  }
-
-  #highlightEqualButton {
-    width: 58px;
-    height: 105px;
-    background: linear-gradient(0deg, rgba(2,0,36,0) 29%, rgba(9,121,13,0.52) 64%, rgba(0,255,70,1) 85%);
-
-    top: 355px;
-    left: 271px;
-  }
 }
+
+.highlightEqualButton,
+.highlightZeroButton,
+.highlightStandartButton {
+  background: radial-gradient(circle, rgba(2,0,36,0) 30%, rgba(9,121,13,0.52) 59%, rgba(0,255,70,1) 86%);
+  border: 1px solid rgba(0,255,70,1);
+  display: none;
+
+  border-radius: 10px;
+  position: absolute;
+  width: 58px;
+  height: 47px;
+}
+
+.invisible {
+  background: rgba(0, 0, 0, 0) !important;
+  border: 1px solid rgba(0, 0, 0, 0) !important;
+}
+
+// .highlightZeroButton {
+//   width: 138px;
+//   height: 47px;
+//   background: linear-gradient(90deg, rgba(2,0,36,0) 29%, rgba(9,121,13,0.52) 64%, rgba(0,255,70,1) 85%);
+
+//   top: 414px;
+//   left: 41px;
+// }
+
+// .highlightEqualButton {
+//   width: 58px;
+//   height: 105px;
+//   background: linear-gradient(0deg, rgba(2,0,36,0) 29%, rgba(9,121,13,0.52) 64%, rgba(0,255,70,1) 85%);
+
+//   top: 355px;
+//   left: 271px;
+// }
