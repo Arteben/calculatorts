@@ -1,6 +1,8 @@
 
 import * as enums from '@/types/enums'
-import {CalcButton} from '@/cacl-button'
+import { CalcButton } from '@/cacl-button'
+import { Display } from '@/display'
+import { setDisplayForCoreCalc } from '@/calc-core'
 
 const buttons = <CalcButton[]>[]
 
@@ -16,6 +18,9 @@ const resizeScreen = function () {
   buttons.forEach(_el => {
     _el.resetViewRect()
   })
+
+  const display = new Display('#calcDisplayNums', '#specialSymbs')
+  setDisplayForCoreCalc(display)
 }
 
 const createButtons = function () {
@@ -29,10 +34,35 @@ const createButtons = function () {
     buttons.push(new CalcButton(params))
   }
 
-  createButton(enums.buttonNames.MC, 'standart', 43, 110)
-  createButton(enums.buttonNames.MPlus, 'standart', 118, 110)
-  createButton(enums.buttonNames.MMinus, 'standart', 194, 110)
-  createButton(enums.buttonNames.MR, 'standart', 270, 110)
+  const btnNames = enums.buttonNames
+
+  createButton(btnNames.MC, 'standart', 43, 110)
+  createButton(btnNames.MPlus, 'standart', 118, 110)
+  createButton(btnNames.MMinus, 'standart', 194, 110)
+  createButton(btnNames.MR, 'standart', 270, 110)
+
+  createButton(btnNames.clear, 'standart', 43, 170)
+  createButton(btnNames.chSign, 'standart', 118, 170)
+  createButton(btnNames.div, 'standart', 194, 170)
+  createButton(btnNames.mult, 'standart', 270, 170)
+
+  createButton(btnNames.num7, 'standart', 43, 230)
+  createButton(btnNames.num8, 'standart', 118, 230)
+  createButton(btnNames.num9, 'standart', 194, 230)
+  createButton(btnNames.minus, 'standart', 270, 230)
+
+  createButton(btnNames.num4, 'standart', 43, 290)
+  createButton(btnNames.num5, 'standart', 118, 290)
+  createButton(btnNames.num6, 'standart', 194, 290)
+  createButton(btnNames.plus, 'standart', 270, 290)
+
+  createButton(btnNames.num1, 'standart', 43, 350)
+  createButton(btnNames.num2, 'standart', 118, 350)
+  createButton(btnNames.num3, 'standart', 194, 350)
+  createButton(btnNames.equal, 'equal', 270, 350)
+
+  createButton(btnNames.num0, 'zero', 43, 410)
+  createButton(btnNames.point, 'standart', 194, 410)
 }
 
 export const setWindowListeners = function () {

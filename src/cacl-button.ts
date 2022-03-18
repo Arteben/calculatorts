@@ -1,5 +1,6 @@
 import * as types from '@/types/app'
 import * as enums from '@/types/enums'
+import { clickButtonForCalcCore } from '@/calc-core'
 
 export class CalcButton {
   el: HTMLElement
@@ -39,6 +40,9 @@ export class CalcButton {
       equal: '.highlightEqualButton'
     }
     const templateButton = <HTMLElement>document.querySelector(buttons[params.elmType])
+    if (params.elmType == 'zero') {
+      console.log(params.elmType, buttons[params.elmType], templateButton)
+    }
     this.el = <HTMLElement>templateButton.cloneNode(false)
     const controls = <HTMLElement>document.querySelector('#calcInteractiveElements')
     controls.appendChild(this.el)
@@ -52,9 +56,8 @@ export class CalcButton {
     this.viewRect = this.el.getBoundingClientRect()
 
     this.el.onclick = (function (_name: enums.buttonNames) {
-      const name = _name
       return function () {
-        console.log('button name', enums.buttonNames[name])
+        clickButtonForCalcCore(_name)
       }
     } (this.name))
   }

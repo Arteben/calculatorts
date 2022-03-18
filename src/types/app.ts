@@ -16,3 +16,5 @@ export interface newButtonParams {
 
 export type buttons = CalcButton[]
 export type turnFlag = 'on' | 'off'
+
+export type displayValueTypes = 'both' | 'nums' | 'special'

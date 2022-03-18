@@ -14,7 +14,7 @@ export enum buttonNames {
   MPlus,
   MMinus,
   MR,
-  Clear,
+  clear,
   chSign,
   div,
   mult,
