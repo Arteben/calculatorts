@@ -1,5 +1,6 @@
 import * as enums from '@/types/enums'
 import { CalcButton } from '@/cacl-button'
+import Big from 'big.js'
 
 export declare function clickButton(): enums.buttonNames
 
@@ -21,4 +22,9 @@ export type displayValueTypes = 'both' | 'nums' | 'special'
 
 export interface numberValueForButtons {
   [index: string]: string
+}
+export interface calcMemory {
+  firstNumber: Big | null
+  memoryCell: Big | null
+  currentOperation: enums.buttonNames | null
 }

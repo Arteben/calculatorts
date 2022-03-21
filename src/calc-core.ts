@@ -1,6 +1,7 @@
 import * as enums from '@/types/enums'
 import { Display } from './display'
 import * as types from '@/types/app'
+import Big from 'big.js'
 
 let display: Display
 const numberValues = <types.numberValueForButtons>{
@@ -15,6 +16,19 @@ const numberValues = <types.numberValueForButtons>{
   [enums.buttonNames.num8]: '8',
   [enums.buttonNames.num9]: '9',
   [enums.buttonNames.point]: '.',
+}
+
+const calcOperations = <types.numberValueForButtons>{
+  [enums.buttonNames.div]: 'div',
+  [enums.buttonNames.mult]: 'mlt',
+  [enums.buttonNames.minus]: 'min',
+  [enums.buttonNames.plus]: 'pls'
+}
+
+const calcMemory = <types.calcMemory>{
+  firstNumber: null,
+  currentOperation: null,
+  memoryCell: null
 }
 
 // const valueChecker = new RegExp('^[1-9]{1}[0-9]{0,8}(\.[0-9]{2})?$')
