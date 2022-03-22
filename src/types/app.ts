@@ -23,8 +23,12 @@ export type displayValueTypes = 'both' | 'nums' | 'special'
 export interface numberValueForButtons {
   [index: string]: string
 }
+
+type calcValue = Big | null
 export interface calcMemory {
-  firstNumber: Big | null
-  memoryCell: Big | null
+  firstNumber: calcValue
+  memoryCell: calcValue
+  secondNumber: calcValue
   currentOperation: enums.buttonNames | null
+  showedResult: boolean
 }

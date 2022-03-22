@@ -11,7 +11,7 @@ export class Display {
   defaultNumsValue = '0'
   defaultSpecialSyms = ''
 
-  setValuesInElements (_type: types.displayValueTypes) {
+  setValuesInElements (_type: types.displayValueTypes = 'both') {
     const setValue = function (_el: HTMLElement, _value: string) {
       _el.innerHTML = _value
     }
@@ -23,15 +23,25 @@ export class Display {
     }
   }
 
-  clearValues () {
-    this.nums = this.defaultNumsValue
-    this.specialSyms = this.defaultSpecialSyms
-    this.setValuesInElements('both')
+  clearValues (_type: types.displayValueTypes = 'both') {
+    if (_type == 'both' || _type == 'nums') {
+      this.nums = this.defaultNumsValue
+      this.setValuesInElements(_type)
+    }
+    if (_type == 'both' || _type == 'special') {
+      this.specialSyms = this.defaultSpecialSyms
+      this.setValuesInElements(_type)
+    }
   }
 
   setNum (_text: any) {
     this.nums = String(_text)
     this.setValuesInElements('nums')
+  }
+
+  setExtra (_extra: any) {
+    this.specialSyms = String(_extra)
+    this.setValuesInElements('special')
   }
 
   constructor(_numsId: string, _extraId: string) {
