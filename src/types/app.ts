@@ -30,7 +30,7 @@ export interface calcMemory {
   memoryCell: calcValue
   secondNumber: calcValue
   currentOperation: enums.buttonNames | null
-  showedResult: boolean
+  calculatedResult: calcValue
 }
 
 export type nameButtonOrNot = enums.buttonNames | undefined

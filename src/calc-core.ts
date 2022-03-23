@@ -38,7 +38,7 @@ const calcMemory = <types.calcMemory>{
   secondNumber: null,
   currentOperation: null,
   memoryCell: null,
-  showedResult: false,
+  calculatedResult: null,
 }
 
 const inputChecker = /^((-?[1-9]+[0-9]{0,7})|(-?0+))\.?[0-9]{0,2}$/
@@ -115,11 +115,11 @@ const calculate = function () {
     }
     display.setNum(result)
     calcMemory.firstNumber = result
+    calcMemory.calculatedResult = result
   }
   calcMemory.secondNumber = null
   calcMemory.currentOperation = null
   setExtraDisplay()
-  calcMemory.showedResult = true
 }
 
 const setNumValue = function (_bigValue: Big, _strValue: string) {
@@ -128,14 +128,15 @@ const setNumValue = function (_bigValue: Big, _strValue: string) {
   } else {
     calcMemory.secondNumber = _bigValue
   }
-  console.log('set value', calcMemory.secondNumber)
   display.setNum(_strValue)
 }
 
 const doMemoryOperation = function (_click: enums.buttonNames) {
 
   const setCellMemoryNumber = function (_num: string, _typeSign: 'pl'| 'min') {
-    let number = Big(_num)
+    let number = calcMemory.calculatedResult
+      ? Big(calcMemory.calculatedResult)
+      : Big(display.nums)
     if (_typeSign == 'pl') {
       number = number.abs()
     } else {
@@ -179,8 +180,9 @@ export const setDisplayForCoreCalc = function (_d: Display) {
 }
 
 export const clickButtonForCalcCore = function (_typeClick: enums.buttonNames) {
-  if (calcMemory.showedResult) {
-    calcMemory.showedResult = false
+
+  if (calcMemory.calculatedResult && !memoryOperations[_typeClick]) {
+    calcMemory.calculatedResult = null
     display.clearValues('nums')
   }
 
