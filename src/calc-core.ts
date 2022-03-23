@@ -26,6 +26,13 @@ const calcOperations = <types.numberValueForButtons>{
   [enums.buttonNames.plus]: 'pls'
 }
 
+const memoryOperations = <types.numberValueForButtons>{
+  [enums.buttonNames.MC]: 'MC',
+  [enums.buttonNames.MMinus]: '-M',
+  [enums.buttonNames.MPlus]: '+M',
+  [enums.buttonNames.MR]: 'MR'
+}
+
 const calcMemory = <types.calcMemory>{
   firstNumber: null,
   secondNumber: null,
@@ -41,7 +48,7 @@ const isNumInput = function (_click: enums.buttonNames) {
   return Boolean(numberValues[_click])
 }
 
-const getInputedDisplay = function (_click: enums.buttonNames) {
+const getInputedDisplay = function (_click: types.nameButtonOrNot) {
   let displayString: string
   const numsWithoutZero = (display.nums === display.defaultNumsValue) ? '' : String(display.nums)
   switch (_click) {
@@ -57,12 +64,16 @@ const getInputedDisplay = function (_click: enums.buttonNames) {
       }
       break
     default:
-      displayString = `${numsWithoutZero}${numberValues[_click]}`
+      if (_click) {
+        displayString = `${numsWithoutZero}${numberValues[_click]}`
+      } else {
+        displayString = display.nums
+      }
   }
   return displayString
 }
 
-const isInputAllow = function (_click: enums.buttonNames) {
+const isInputAllow = function (_click?: enums.buttonNames) {
   return inputChecker.test(getInputedDisplay(_click))
 }
 
@@ -72,6 +83,16 @@ const setExtraDisplay = function () {
   if (calcMemory.currentOperation) {
     extraStr += calcOperations[calcMemory.currentOperation]
   }
+
+  const memoryNum = calcMemory.memoryCell
+  if (memoryNum) {
+    if (Number(memoryNum.abs()) == Number(memoryNum)) {
+      extraStr += memoryOperations[enums.buttonNames.MPlus]
+    } else {
+      extraStr += memoryOperations[enums.buttonNames.MMinus]
+    }
+  }
+
   display.setExtra(extraStr)
 }
 
@@ -101,6 +122,58 @@ const calculate = function () {
   calcMemory.showedResult = true
 }
 
+const setNumValue = function (_bigValue: Big, _strValue: string) {
+  if (calcMemory.currentOperation == null) {
+    calcMemory.firstNumber = _bigValue
+  } else {
+    calcMemory.secondNumber = _bigValue
+  }
+  console.log('set value', calcMemory.secondNumber)
+  display.setNum(_strValue)
+}
+
+const doMemoryOperation = function (_click: enums.buttonNames) {
+
+  const setCellMemoryNumber = function (_num: string, _typeSign: 'pl'| 'min') {
+    let number = Big(_num)
+    if (_typeSign == 'pl') {
+      number = number.abs()
+    } else {
+      number = Big(0).minus(number.abs())
+    }
+    calcMemory.memoryCell = number
+  }
+
+  const removeNumOperations = function () {
+    display.clearValues('nums')
+    calcMemory.firstNumber = null
+    calcMemory.secondNumber = null
+    calcMemory.currentOperation = null
+  }
+
+  switch (_click) {
+    case enums.buttonNames.MC:
+      calcMemory.memoryCell = null
+      break
+    case enums.buttonNames.MPlus:
+      setCellMemoryNumber(display.nums, 'pl')
+      removeNumOperations()
+      break
+    case enums.buttonNames.MMinus:
+      setCellMemoryNumber(display.nums, 'min')
+      removeNumOperations()
+      break
+    default:
+      if (calcMemory.memoryCell) {
+        display.clearValues('nums')
+        setNumValue(calcMemory.memoryCell, String(calcMemory.memoryCell))
+        calcMemory.memoryCell = null
+      }
+      break;
+  }
+  setExtraDisplay()
+}
+
 export const setDisplayForCoreCalc = function (_d: Display) {
   display = _d
 }
@@ -120,12 +193,9 @@ export const clickButtonForCalcCore = function (_typeClick: enums.buttonNames) {
     return
   } else if (isNumInput(_typeClick) && isInputAllow(_typeClick)) {
     const value = getInputedDisplay(_typeClick)
-    if (calcMemory.currentOperation == null) {
-      calcMemory.firstNumber = Big(value)
-    } else {
-      calcMemory.secondNumber = Big(value)
-    }
-    display.setNum(value)
+    setNumValue(Big(value), value)
+  } else if (memoryOperations[_typeClick] && isInputAllow()) {
+    doMemoryOperation(_typeClick)
   } else if (_typeClick === enums.buttonNames.equal) {
     calculate()
   }

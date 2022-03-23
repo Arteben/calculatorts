@@ -32,3 +32,5 @@ export interface calcMemory {
   currentOperation: enums.buttonNames | null
   showedResult: boolean
 }
+
+export type nameButtonOrNot = enums.buttonNames | undefined
