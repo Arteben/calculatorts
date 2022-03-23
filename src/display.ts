@@ -1,6 +1,4 @@
 import * as types from '@/types/app'
-// import * as enums from '@/types/enums'
-
 export class Display {
   numsElm: HTMLElement
   extraElm: HTMLElement
@@ -11,19 +9,30 @@ export class Display {
   defaultNumsValue = '0'
   defaultSpecialSyms = ''
 
-  setValuesInElements (_type: types.displayValueTypes = 'both') {
+  setValuesInElements(_type: types.displayValueTypes = 'both') {
     const setValue = function (_el: HTMLElement, _value: string) {
       _el.innerHTML = _value
     }
+
+    const converToBeauty = function (_num: string) {
+      let displayNum = Number(_num).toLocaleString(undefined,
+        { minimumFractionDigits: 0 })
+      const checkPoint = /^.*\.+$/
+      if (checkPoint.test(_num)) {
+        displayNum += '.'
+      }
+      return displayNum
+    }
+
     if (_type == 'both' || _type == 'nums') {
-      setValue(this.numsElm, this.nums)
+      setValue(this.numsElm, converToBeauty(this.nums))
     }
     if (_type == 'both' || _type == 'special') {
       setValue(this.extraElm, this.specialSyms)
     }
   }
 
-  clearValues (_type: types.displayValueTypes = 'both') {
+  clearValues(_type: types.displayValueTypes = 'both') {
     if (_type == 'both' || _type == 'nums') {
       this.nums = this.defaultNumsValue
       this.setValuesInElements(_type)
@@ -34,12 +43,12 @@ export class Display {
     }
   }
 
-  setNum (_text: any) {
-    this.nums = String(_text)
+  setNum(_num: any) {
+    this.nums = String(_num)
     this.setValuesInElements('nums')
   }
 
-  setExtra (_extra: any) {
+  setExtra(_extra: any) {
     this.specialSyms = String(_extra)
     this.setValuesInElements('special')
   }

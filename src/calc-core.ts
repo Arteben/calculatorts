@@ -16,6 +16,7 @@ const numberValues = <types.numberValueForButtons>{
   [enums.buttonNames.num8]: '8',
   [enums.buttonNames.num9]: '9',
   [enums.buttonNames.point]: '.',
+  [enums.buttonNames.chSign]: '-',
 }
 
 const calcOperations = <types.numberValueForButtons>{
@@ -33,21 +34,36 @@ const calcMemory = <types.calcMemory>{
   showedResult: false,
 }
 
-// const valueChecker = new RegExp('^[1-9]{1}[0-9]{0,8}(\.[0-9]{2})?$')
-const inputChecker = new RegExp('^[1-9]{1}[0-9]{0,8}\.?[0-9]{0,2}$')
+const inputChecker = /^((-?[1-9]+[0-9]{0,7})|(-?0+))\.?[0-9]{0,2}$/
+const minusChecker = /^-+.*$/
 
 const isNumInput = function (_click: enums.buttonNames) {
   return Boolean(numberValues[_click])
 }
 
-const getInputedDisplay = function (_num: string) {
-  const currentNums = (display.nums === display.defaultNumsValue) ? '' : display.nums
-  return `${currentNums}${_num}`
+const getInputedDisplay = function (_click: enums.buttonNames) {
+  let displayString: string
+  const numsWithoutZero = (display.nums === display.defaultNumsValue) ? '' : String(display.nums)
+  switch (_click) {
+    case enums.buttonNames.point:
+      displayString = `${String(display.nums)}.`
+      console.log('display point', display.nums, displayString)
+      break
+    case enums.buttonNames.chSign:
+      if (minusChecker.test(numsWithoutZero)) {
+        displayString = numsWithoutZero.replace('-', '')
+      } else {
+        displayString = `-${numsWithoutZero}`
+      }
+      break
+    default:
+      displayString = `${numsWithoutZero}${numberValues[_click]}`
+  }
+  return displayString
 }
 
 const isInputAllow = function (_click: enums.buttonNames) {
-  const someNumber = String(numberValues[_click])
-  return inputChecker.test(getInputedDisplay(someNumber))
+  return inputChecker.test(getInputedDisplay(_click))
 }
 
 const setExtraDisplay = function () {
@@ -76,7 +92,7 @@ const calculate = function () {
         result = calcMemory.firstNumber.div(calcMemory.secondNumber)
         break;
     }
-    display.setNum(Number(result))
+    display.setNum(result)
     calcMemory.firstNumber = result
   }
   calcMemory.secondNumber = null
@@ -103,7 +119,7 @@ export const clickButtonForCalcCore = function (_typeClick: enums.buttonNames) {
     display.clearValues('nums')
     return
   } else if (isNumInput(_typeClick) && isInputAllow(_typeClick)) {
-    const value = getInputedDisplay(String(numberValues[_typeClick]))
+    const value = getInputedDisplay(_typeClick)
     if (calcMemory.currentOperation == null) {
       calcMemory.firstNumber = Big(value)
     } else {
