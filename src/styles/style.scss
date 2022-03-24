@@ -59,8 +59,11 @@ $calcImgHeight: 500px;
       text-align: end;
       padding: 3px;
       padding-left: 10px;
-      overflow: hidden;
       letter-spacing: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 220px;
     }
   }
 }

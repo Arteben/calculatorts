@@ -41,7 +41,7 @@ const calcMemory = <types.calcMemory>{
   calculatedResult: null,
 }
 
-const inputChecker = /^((-?[1-9]+[0-9]{0,7})|(-?0+))\.?[0-9]{0,2}$/
+const inputChecker = /^((-?[1-9]{1}[0-9]{0,7})|(-?0+))\.?[0-9]{0,2}$/
 const minusChecker = /^-+.*$/
 
 const isNumInput = function (_click: enums.buttonNames) {
@@ -73,6 +73,7 @@ const getInputedDisplay = function (_click: types.nameButtonOrNot) {
 }
 
 const isInputAllow = function (_click?: enums.buttonNames) {
+  console.log('input checker', getInputedDisplay(_click), inputChecker.test(getInputedDisplay(_click)))
   return inputChecker.test(getInputedDisplay(_click))
 }
 
@@ -96,29 +97,41 @@ const setExtraDisplay = function () {
 }
 
 const calculate = function () {
-  if (calcMemory.firstNumber && calcMemory.currentOperation && calcMemory.secondNumber) {
+
+  const doOperation = function () {
     let result: Big = Big(0)
-    switch (calcMemory.currentOperation) {
-      case enums.buttonNames.plus:
-        result = calcMemory.firstNumber.plus(calcMemory.secondNumber)
-        break;
-      case enums.buttonNames.minus:
-        result = calcMemory.firstNumber.minus(calcMemory.secondNumber)
-        break;
-      case enums.buttonNames.mult:
-        result = calcMemory.firstNumber.mul(calcMemory.secondNumber)
-        break;
-      case enums.buttonNames.div:
-        result = calcMemory.firstNumber.div(calcMemory.secondNumber)
-        break;
+    if (calcMemory.firstNumber && calcMemory.currentOperation && calcMemory.secondNumber) {
+      switch (calcMemory.currentOperation) {
+        case enums.buttonNames.plus:
+          result = calcMemory.firstNumber.plus(calcMemory.secondNumber)
+          break;
+        case enums.buttonNames.minus:
+          result = calcMemory.firstNumber.minus(calcMemory.secondNumber)
+          break;
+        case enums.buttonNames.mult:
+          result = calcMemory.firstNumber.mul(calcMemory.secondNumber)
+          break;
+        case enums.buttonNames.div:
+          result = calcMemory.firstNumber.div(calcMemory.secondNumber)
+          break;
+      }
     }
-    display.setNum(result)
-    calcMemory.firstNumber = result
-    calcMemory.calculatedResult = result
+    return result
   }
-  calcMemory.secondNumber = null
-  calcMemory.currentOperation = null
-  setExtraDisplay()
+
+  if (calcMemory.firstNumber && calcMemory.currentOperation && calcMemory.secondNumber) {
+    try {
+      const result = doOperation()
+      display.setNum(result)
+      calcMemory.firstNumber = result
+      calcMemory.calculatedResult = result
+    } catch(e: any) {
+      display.setError(e)
+    }
+    calcMemory.secondNumber = null
+    calcMemory.currentOperation = null
+    setExtraDisplay()
+  }
 }
 
 const setNumValue = function (_bigValue: Big, _strValue: string) {

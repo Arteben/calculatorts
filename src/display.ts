@@ -53,6 +53,11 @@ export class Display {
     this.setValuesInElements('special')
   }
 
+  setError (_msg: string) {
+    this.clearValues('nums')
+    this.numsElm.innerHTML = _msg
+  }
+
   constructor(_numsId: string, _extraId: string) {
     this.numsElm = <HTMLElement>document.querySelector(_numsId)
     this.extraElm = <HTMLElement>document.querySelector(_extraId)
