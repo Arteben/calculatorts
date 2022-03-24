@@ -4,14 +4,18 @@ import { clickButtonForCalcCore } from '@/calc-core'
 
 export class CalcButton {
   el: HTMLElement
+  parentElement: HTMLElement
   name: enums.buttonNames
-  viewRect: DOMRect
+  elX: number
+  elY: number
+  elRect: DOMRect
   checkVisible (_mouse: MouseEvent) {
-    const rect = this.viewRect
-    const mouseX = _mouse.x
-    const mouseYReal = _mouse.y + window.scrollY
-    const isCheckX = mouseX >= rect.left && mouseX <= (rect.left + rect.width)
-    const isCheckY = mouseYReal >= rect.top && mouseYReal <= (rect.top + rect.height)
+    const parentRect = this.parentElement.getBoundingClientRect()
+    const elLeftValue = this.elX + parentRect.left
+    const elTopValue = this.elY + parentRect.top
+    const isCheckX = _mouse.x >= elLeftValue && _mouse.x <= (elLeftValue + this.elRect.width)
+    const isCheckY = _mouse.y >= elTopValue && _mouse.y <= (elTopValue + this.elRect.height)
+
     const turnType = (isCheckX && isCheckY) ? 'off' : 'on'
 
     this.turnVisible(turnType)
@@ -30,7 +34,7 @@ export class CalcButton {
   }
 
   resetViewRect () {
-    this.viewRect = this.el.getBoundingClientRect()
+    this.elRect = this.el.getBoundingClientRect()
   }
 
   constructor(params: types.newButtonParams) {
@@ -46,14 +50,18 @@ export class CalcButton {
     this.el = <HTMLElement>templateButton.cloneNode(false)
     const controls = <HTMLElement>document.querySelector('#calcInteractiveElements')
     controls.appendChild(this.el)
+    this.parentElement = controls
 
     this.name = params.buttonName
 
     this.el.style.display = 'block'
     this.turnVisible('on')
     this.el.style.top = String(params.top + 'px')
+    this.elY = params.top
     this.el.style.left = String(params.left + 'px')
-    this.viewRect = this.el.getBoundingClientRect()
+    this.elX = params.left
+
+    this.elRect = this.el.getBoundingClientRect()
 
     this.el.onclick = (function (_name: enums.buttonNames) {
       return function () {

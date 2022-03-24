@@ -12,7 +12,8 @@ const resizeScreen = function () {
   if (imgElement && controlElementDiv) {
     const coordinates = imgElement.getBoundingClientRect()
     controlElementDiv.style.left = `${String(coordinates.x)}px`
-    controlElementDiv.style.top = `${String(coordinates.y)}px`
+    const yTop = coordinates.y + window.scrollY
+    controlElementDiv.style.top = `${String(yTop)}px`
   }
 
   buttons.forEach(_el => {
