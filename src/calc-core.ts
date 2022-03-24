@@ -54,7 +54,6 @@ const getInputedDisplay = function (_click: types.nameButtonOrNot) {
   switch (_click) {
     case enums.buttonNames.point:
       displayString = `${String(display.nums)}.`
-      console.log('display point', display.nums, displayString)
       break
     case enums.buttonNames.chSign:
       if (minusChecker.test(numsWithoutZero)) {
@@ -64,7 +63,7 @@ const getInputedDisplay = function (_click: types.nameButtonOrNot) {
       }
       break
     default:
-      if (_click) {
+      if (_click !== undefined) {
         displayString = `${numsWithoutZero}${numberValues[_click]}`
       } else {
         displayString = display.nums
@@ -195,6 +194,7 @@ export const clickButtonForCalcCore = function (_typeClick: enums.buttonNames) {
     return
   } else if (isNumInput(_typeClick) && isInputAllow(_typeClick)) {
     const value = getInputedDisplay(_typeClick)
+    console.log('setNumValue', value)
     setNumValue(Big(value), value)
   } else if (memoryOperations[_typeClick] && isInputAllow()) {
     doMemoryOperation(_typeClick)
