@@ -1,24 +1,99 @@
 
 body {
-  overflow: hidden;
+  background: aliceblue;
 }
 
 #app {
   display: flex;
   justify-content: center;
-  background: aliceblue;
-  min-height: 1000px;
-  padding-top: 100px;
+  padding-top: 50px;
 }
+
+$calcImgWidth: 370px;
+$calcImgHeight: 500px;
 
 #calcImg {
-  width: 370px;
-  height: 500px;
+  width: $calcImgWidth;
+  height: $calcImgHeight;
 }
 
-#someText {
-  min-height: 200px;
-  background-color: antiquewhite;
-  margin: 10px auto;
-  font-size: 40px;
+#calcInteractiveElements {
+  width: $calcImgWidth;
+  height: $calcImgHeight;
+  position: absolute;
+  top: 55px;
+  left: 438px;
+  
+  #calcDisplay {
+    $widthDisplay: 295px;
+    $heightDisplay: 40px;
+  
+    display: flex;
+    align-items: center;
+    user-select: none;
+    flex-direction: row-reverse;
+    width: $widthDisplay;
+    max-width: $widthDisplay;
+    height: $heightDisplay;
+    max-height: $heightDisplay;
+    background: rgb(159, 172, 159);
+    border: 5px ridge gray;
+    border-radius: 10px;
+    padding: 3px;
+    position: relative;
+
+    top: 35px;
+    left: 30px;
+  
+    #specialSymbs {
+      font-size: 23px;
+      font-weight: bold;
+      overflow: hidden;
+      padding: 5px;
+      max-width: 80px;
+    }
+    #calcDisplayNums {
+      font-size: 28px;
+      font-weight: bold;
+      flex-grow: 1;
+      text-align: end;
+      padding: 3px;
+      padding-left: 10px;
+      letter-spacing: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 220px;
+    }
+  }
+}
+
+.highlightEqualButton,
+.highlightZeroButton,
+.highlightStandartButton {
+  background: radial-gradient(circle, rgba(2,0,36,0) 30%, rgba(9,121,13,0.52) 59%, rgb(102, 240, 139) 86%);
+  border: 1px solid rgb(99, 179, 121);
+  display: none;
+
+  border-radius: 10px;
+  position: absolute;
+  width: 58px;
+  height: 47px;
+}
+
+.invisible {
+  background: rgba(0, 0, 0, 0) !important;
+  border: 1px solid rgba(0, 0, 0, 0) !important;
+}
+
+.highlightZeroButton {
+  width: 138px;
+  height: 47px;
+  background: linear-gradient(90deg, rgba(2,0,36,0) 29%, rgba(9,121,13,0.52) 64%, rgb(102, 240, 139) 85%);
+}
+
+.highlightEqualButton {
+  width: 58px;
+  height: 105px;
+  background: linear-gradient(0deg, rgba(2,0,36,0) 29%, rgba(9,121,13,0.52) 64%, rgb(102, 240, 139) 85%);
 }

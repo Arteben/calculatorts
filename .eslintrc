@@ -16,16 +16,7 @@
       "single"
     ],
     "no-undef": "off",
-    "@typescript-eslint/member-delimiter-style": ["error", {
-      "multiline": {
-        "delimiter": "none",
-        "requireLast": true
-      },
-      "singleline": {
-        "delimiter": "comma",
-        "requireLast": false
-      }
-    }]
+    "no-useless-escape": "off"
   },
   "overrides": [
     {
@@ -33,7 +24,20 @@
       "extends": [
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
-      ]
+      ],
+      "rules": {
+        "@typescript-eslint/member-delimiter-style": ["error", {
+          "multiline": {
+            "delimiter": "none",
+            "requireLast": true
+          },
+          "singleline": {
+            "delimiter": "comma",
+            "requireLast": false
+          }
+        }],
+        "@typescript-eslint/prefer-as-const": "off"
+      }
     }
   ]
 }
