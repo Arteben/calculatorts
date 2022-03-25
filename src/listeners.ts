@@ -75,5 +75,8 @@ export const setWindowListeners = function () {
       _button.checkVisible(_event)
     })
   }, true)
-  window.addEventListener('load', createButtons, true)
+  window.addEventListener('load', function () {
+    createButtons()
+    resizeScreen()
+  }, true)
 }
